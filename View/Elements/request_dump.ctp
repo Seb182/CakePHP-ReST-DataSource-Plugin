@@ -60,7 +60,7 @@ if ($noLogs || isset($_forced_from_dbo_)):
 						<td><?php echo $i['request_body']; ?></td>
 						<td><?php echo $i['response_body']; ?></td>
 					</tr>
-				<? endforeach; ?>
+				<?php endforeach; ?>
 			</tbody></table>
 		<?php
 	endforeach;
