@@ -71,8 +71,14 @@ class RestSource extends DataSource {
  * @var integer Request log limit per entry in bytes
  */
 	protected $_requestLogLimitBytes = 256;
+    
+    /**
+     * 
+     * @var array The Schema structure
+     */
+    protected $_schema = null;
 
-/**
+    /**
  * Loads HttpSocket class
  *
  * @param array $config
@@ -86,8 +92,42 @@ class RestSource extends DataSource {
 		}
 		$this->Http = $Http;
 	}
+    
+    /**
+     * For caching purposes. Return null until caching for RESTful services has been implemented
+     * @param array $data
+     * @return array|null
+     * @todo Research caching
+     */
+    public function listSources($data = null) {
+      return null;
+    }
+    
+    /**
+     * Get the Schema either from the model if defined or from the Datasource
+     * @param Model|String $model Model to be described
+     * @return array Schema for save Model::save
+     */
+    public function describe($model) {
+      $schema = $model->getSchema();
+      if(empty($schema)) {
+        $schema = $this->_schema;
+      }
+      return $schema;
+    }
+    
+    /**
+     * Determine how records will be counted. Simply return 'COUNT' here to be used
+     * by the read method for counting
+     * @param Model $model
+     * @param type $function
+     * @param type $parameters
+     */
+    public function calculate(Model $model, $function, $parameters = array()) {
+      return 'COUNT';
+    }
 
-/**
+    /**
  * Sets method = POST in request if not already set
  *
  * @param Model $model
@@ -107,6 +147,9 @@ class RestSource extends DataSource {
  * @param integer $recursive Unused
  */
 	public function read(Model $model, $queryData = array(), $recursive = null) {
+        if($queryData['fields'] === 'COUNT') {
+          return array(array(array('count' => 1)));
+        }
 		$model->request = array_merge(array('method' => 'GET'), $model->request);
 		return $this->request($model);
 	}
