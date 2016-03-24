@@ -1,5 +1,5 @@
 {
-    "name": "nojimage/cakephp-rest",
+    "name": "Seb182/cakephp-rest",
     "description": "A CakePHP Plugin containing a DataSource for interacting with ReSTful web services.",
     "type": "cakephp-plugin",
     "keywords": ["cakephp", "datasource"],
@@ -15,10 +15,15 @@
             "name": "Takashi Nojima",
             "homepage": "http://php-tips.com",
             "role": "Developer"
+        },
+        {
+            "name": "Sébastien PLAZA",
+            "homepage": "http://www.adullact-projet.coop",
+            "role": "Developer"
         }
     ],
     "require": {
-        "php": ">=5.2.8",
+        "php": ">=5.3.0",
         "composer/installers": "*"
     },
     "extra": {
